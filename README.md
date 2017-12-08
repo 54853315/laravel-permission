@@ -18,7 +18,7 @@
 * [Extending](#extending)
 * [Cache](#cache)
 
-This package allows you to manage user permissions and roles in a database.
+This package allows you to manage user permissions and roles in a database. Support multi-tenant SaaS.
 
 Once installed you can do stuff like this:
 

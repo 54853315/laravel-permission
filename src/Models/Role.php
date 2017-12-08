@@ -2,7 +2,8 @@
 
 namespace Spatie\Permission\Models;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
+use Larasaas\Tenant\Model;  //租户隔离
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Exceptions\GuardDoesNotMatch;
@@ -32,7 +33,7 @@ class Role extends Model implements RoleContract
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? config('auth.defaults.guard');
 
-        if (static::where('name', $attributes['name'])->where('guard_name', $attributes['guard_name'])->first()) {
+        if (static::where('name', $attributes['name'])->where('tenant_id', $attributes['tenant_id'])->where('guard_name', $attributes['guard_name'])->first()) {
             throw RoleAlreadyExists::create($attributes['name'], $attributes['guard_name']);
         }
 

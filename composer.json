@@ -1,20 +1,25 @@
 {
-    "name": "spatie/laravel-permission",
+    "name": "larasaas/laravel-permission",
     "description": "Permission handling for Laravel 5.4 and up",
     "keywords": [
-        "spatie",
+        "larasaas",
         "laravel",
         "permission",
         "acl",
         "security"
     ],
-    "homepage": "https://github.com/spatie/laravel-permission",
+    "homepage": "https://github.com/larasaas/laravel-permission",
     "license": "MIT",
     "authors": [
         {
             "name": "Freek Van der Herten",
-            "email": "freek@spatie.be",
-            "homepage": "https://spatie.be",
+            "email": "freek@spatie.be ",
+            "homepage": "https://spatie.be ",
+            "role": "Developer"
+        },
+        {
+            "name": "ikodota",
+            "email": "ikodota@gmail.com",
             "role": "Developer"
         }
     ],
@@ -56,4 +61,5 @@
             ]
         }
     }
+    
 }

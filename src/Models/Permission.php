@@ -3,8 +3,8 @@
 namespace Spatie\Permission\Models;
 
 use Illuminate\Support\Collection;
-//use Illuminate\Database\Eloquent\Model;
-use Larasaas\Tenant\Model;  //租户隔离
+use Illuminate\Database\Eloquent\Model;
+// use Larasaas\Tenant\Model;  //租户隔离
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -32,7 +32,7 @@ class Permission extends Model implements PermissionContract
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? config('auth.defaults.guard');
 
-        if (static::getPermissions()->where('name', $attributes['name'])->where('tenant_id', $attributes['tenant_id'])->where('guard_name', $attributes['guard_name'])->first()) {
+        if (static::getPermissions()->where('name', $attributes['name'])->where('guard_name', $attributes['guard_name'])->first()) {
             throw PermissionAlreadyExists::create($attributes['name'], $attributes['guard_name']);
         }
 

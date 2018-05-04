@@ -4,7 +4,7 @@ namespace Spatie\Permission\Models;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-// use Larasaas\Tenant\Model;  //租户隔离
+//use Larasaas\Tenant\Model;  //租户隔离
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\RefreshesPermissionCache;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;

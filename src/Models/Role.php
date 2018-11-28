@@ -2,8 +2,8 @@
 
 namespace Spatie\Permission\Models;
 
-//use Illuminate\Database\Eloquent\Model;
-use Larasaas\Tenant\Model;  //租户隔离
+use Illuminate\Database\Eloquent\Model;
+//use Larasaas\Tenant\Model;  //租户隔离
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Exceptions\GuardDoesNotMatch;

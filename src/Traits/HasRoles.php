@@ -117,33 +117,36 @@ trait HasRoles
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePermission(Builder $query, $permissions): Builder
+    public function scopePermission(Builder $query, $permissions,$tenant_id=0): Builder
     {
+        if(empty($tenant_id)){
+            $tenant_id = Auth::user()->tenant_id;
+        }
         $permissions = $this->convertToPermissionModels($permissions);
-
         $rolesWithPermissions = array_unique(array_reduce($permissions, function ($result, $permission) {
             return array_merge($result, $permission->roles->all());
         }, []));
 
         return $query->
-            where(function ($query) use ($permissions, $rolesWithPermissions) {
-                $query->whereHas('permissions', function ($query) use ($permissions) {
-                    $query->where(function ($query) use ($permissions) {
-                        foreach ($permissions as $permission) {
-                            $query->orWhere(config('permission.table_names.permissions').'.id', $permission->id);
+        where(function ($query) use ($permissions, $rolesWithPermissions,$tenant_id) {
+            $query->whereHas('permissions', function ($query) use ($permissions) {
+                $query->where(function ($query) use ($permissions) {
+                    foreach ($permissions as $permission) {
+                        $query->orWhere(config('permission.table_names.permissions').'.id', $permission->id);
+                    }
+                });
+            });
+            if (count($rolesWithPermissions) > 0) {
+                $query->orWhereHas('roles', function ($query) use ($rolesWithPermissions,$tenant_id) {
+                    $query->withoutGlobalScopes()->where('tenant_id',$tenant_id);
+                    $query->where(function ($query) use ($rolesWithPermissions) {
+                        foreach ($rolesWithPermissions as $role) {
+                            $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
                         }
                     });
                 });
-                if (count($rolesWithPermissions) > 0) {
-                    $query->orWhereHas('roles', function ($query) use ($rolesWithPermissions) {
-                        $query->where(function ($query) use ($rolesWithPermissions) {
-                            foreach ($rolesWithPermissions as $role) {
-                                $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
-                            }
-                        });
-                    });
-                }
-            });
+            }
+        });
     }
 
     /**
